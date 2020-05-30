@@ -1,0 +1,3 @@
+[submodule "django-locallibrary-tutorial"]
+	path = django-locallibrary-tutorial
+	url = https://github.com/mdn/django-locallibrary-tutorial.git
