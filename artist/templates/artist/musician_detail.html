@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>{{ musician.first_name }} {{ musician.last_name }}</h1>
+
+<h1><a href="{{ musician.group.get_absolute_url }}">{{ musician.group }}</a></h1>
+
+<p>
+{% for inst in musician.instrument.all %}
+    {{ inst }}
+{% endfor %}
+</p>
+
+<div>
+    <img class="fit-photo"
+        src={{ musician.photo }}
+        alt="musician photo">
+</div>
+
+<p>Hometown: {{ musician.hometown }}</p>
+
+{% endblock %}

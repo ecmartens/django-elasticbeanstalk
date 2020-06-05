@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>{{ group.name }}</h1>
+
+<div>
+    <img class="fit-photo"
+        src={{ group.photo }}
+        alt="band photo">
+</div>
+
+<p>Origin: {{ group.origin }}</p>
+
+
+<dl>
+<div>Members</div>
+{% for musician in group.members.all %}
+    <li><a href="{{ musician.get_absolute_url }}">{{ musician }}</a></li>
+{% endfor %}
+</dl>
+
+<a href="/artist/groups">groups home</a>
+
+{% endblock %}

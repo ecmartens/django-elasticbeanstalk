@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<title>musical groups</title>
+
+{% for group in group_list %}
+    <div>
+    <h1><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></h1>
+    <img class="fit-photo"
+        src={{ group.photo }}
+        alt="band photo">
+    </div>
+{% endfor %}
+
+{% endblock %}
