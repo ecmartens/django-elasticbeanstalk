@@ -22,9 +22,10 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('artist/', include('artist.urls')),
+    path('artists/', include('artist.urls')),
+    path('home/', include('artist.urls')),
 ]
 
 urlpatterns += [
-    path('', RedirectView.as_view(url='/artist/', permanent=True)),
+    path('', RedirectView.as_view(url='/home/', permanent=True)),
 ]
