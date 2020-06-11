@@ -34,7 +34,7 @@ class Group(models.Model):
 #    genre = models.ManyToManyField('Genre', help_text="Enter a genre.")
     origin = models.CharField(max_length=100, default="")
     date_formed = models.DateField(default=date.today)
-    photo = models.CharField(max_length=200, default="https://images.app.goo.gl/ivoQGPgXPHC79EBKA")
+    photo = models.ImageField(upload_to='groups', default="https://images.app.goo.gl/ivoQGPgXPHC79EBKA")
     members = models.ManyToManyField('Musician', help_text="enter musicians.", related_name='+')
     bio = models.CharField(max_length=500, default="The artist's bio goes here. The artist's bio goes here. The artist's bio goes here. The artist's bio goes here. The artist's bio goes here.")
 
