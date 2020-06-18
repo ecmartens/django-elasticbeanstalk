@@ -13,6 +13,7 @@ class Musician(models.Model):
     '''Model representing a musician.'''
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    alias = models.CharField(max_length=100, null=True, default="None")
     group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True, blank=True, related_name='+')
     instrument = models.ManyToManyField(Instrument, help_text="Select instrument(s) for this musician.")
     photo = models.ImageField(upload_to='musicians/', default="/media/bc1.jpg")
@@ -20,7 +21,10 @@ class Musician(models.Model):
     hometown = models.CharField(max_length=100, default="undefined")
     
     def __str__(self):
-        return self.first_name + ' ' + self.last_name
+        if not self.alias == "None":
+            return self.alias
+        else:
+            return self.first_name + ' ' + self.last_name
     
     def get_absolute_url(self):
         """Returns the url to access a specific Musician instance."""

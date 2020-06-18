@@ -25,6 +25,8 @@
           font-size: 3.5rem;
         }
       }
+
+      body { background: #333 }
     </style>
     <!-- Custom styles for this template -->
     <link href="../../static/css/carousel.css" rel="stylesheet">
@@ -70,14 +72,6 @@
     <div class="row featurette">
       <div class="col-md-7">
         <h2 class="featurette-heading"><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></h2>
-        <p class="lead">Origin: {{ group.origin }}</p>
-        <p class="lead">Albums</p>
-        <dl>
-          <div>albums...</div>
-          {% for album in group.albums.all %}
-              <li><a href="{{ album.get_absolute_url }}">{{ album.name }}</a></li>
-          {% endfor %}
-        </dl>
       </div>
       <div class="col-md-5">
         <img src="{{ MEDIA_URL }}{{ group.photo.name }}" height="250">

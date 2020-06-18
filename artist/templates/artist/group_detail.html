@@ -25,6 +25,8 @@
           font-size: 3.5rem;
         }
       }
+
+      body { background: #333 }
     </style>
     <!-- Custom styles for this template -->
     <link href="../../static/css/carousel.css" rel="stylesheet">
@@ -67,11 +69,41 @@
     <div class="row featurette">
       <div class="col-md-7">
         <h2 class="featurette-heading">{{ group.name }} </h2>
-        <h3><span class="text-muted">{{ group.origin }} </span></h3>
-        <p class="lead">{{ group.about }}</p>
+        <h3><span class="text-muted">{{ group.origin }}</span></h3>
+        <p class="lead">{{ group.bio }}</p>
+<!----->
+        <!-- <p class="lead">
+        <dl>
+          <div>Members</div>
+          {% for musician in group.members.all %}
+              <li><a href="{{ musician.get_absolute_url }}">{{ musician }}</a></li>
+          {% endfor %}
+        </dl> -->
+<!----->
+        <!-- <dl> -->
+          <!-- <div>Albums</div> -->
+          <h3><span class="text-muted">Albums</span></h3>
+            {% for album in group.albums.all %}
+              <!-- <li>{{ album.name }}, {{ album.release_year }}</li> -->
+              <!-- <li>{{ album.name }}, {{ album.release_year }} <img src="{{ MEDIA_URL }}{{ album.cover_photo.name }}" height="50"></li> -->
+              <div>{{ album.name }}, {{ album.release_year }}</div>
+              <div> <img src="{{ MEDIA_URL }}{{ album.cover_photo.name }}" height="100"></div>
+            {% endfor %}
+        <!-- </dl> -->
+      </p>
+<!----->
+      <!-- <p class="lead">{{ group.bio }}</p> -->
+<!----->
       </div>
       <div class="col-md-5">
-          <img src={{ group.photo }} height="325"/>
+        <img src="{{ MEDIA_URL }}{{ group.photo.name }}" height="250">
+        <p class="lead">
+          <dl>
+            <div>Members</div>
+            {% for musician in group.members.all %}
+                <li><a href="{{ musician.get_absolute_url }}">{{ musician }}</a></li>
+            {% endfor %}
+          </dl>
       </div>
     </div>
 

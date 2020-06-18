@@ -15,5 +15,3 @@ urlpatterns += [
     path('groups/<int:pk>', views.GroupDetailView.as_view(), name='group-detail'),
     path('musicians/<int:pk>', views.MusicianDetailView.as_view(), name='musician-detail')
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
