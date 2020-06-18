@@ -1,23 +1,24 @@
 {% extends "base_generic.html" %}
 
-{% block content %}
+    <!-- START THE FEATURETTES -->
+    {% block content %}
+    <hr class="featurette-divider">
 
-<h1>{{ musician.first_name }} {{ musician.last_name }}</h1>
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h1><a href="{{ musician.group.get_absolute_url }}">{{ musician.group }}</a></h1>
+        <h2 class="featurette-heading">{{ musician.alias }} </h2>
+        <h2 class="featurette-heading">{{ musician.first_name }} {{ musician.last_name }} </h2>
+        <h3><span class="text-muted">{{ musician.hometown }}</span></h3>
+        <p class="lead">{{ musician.hometown }}</p>
 
-<h1><a href="{{ musician.group.get_absolute_url }}">{{ musician.group }}</a></h1>
+      </div>
+      <div class="col-md-5">
+        <img src="{{ MEDIA_URL }}{{ musician.photo.name }}" height="350">
+        <p class="lead">
+      </div>
+    </div>
 
-<p>
-{% for inst in musician.instrument.all %}
-    {{ inst }}
-{% endfor %}
-</p>
-
-<div>
-    <img class="fit-photo"
-        src={{ musician.photo }}
-        alt="musician photo">
-</div>
-
-<p>Hometown: {{ musician.hometown }}</p>
-
-{% endblock %}
+    <hr class="featurette-divider">
+    {% endblock %}
+    <!-- /END THE FEATURETTES -->
