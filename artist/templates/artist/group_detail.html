@@ -11,22 +11,20 @@
         <h3><span class="text-muted">{{ group.origin }}</span></h3>
         <p class="lead">{{ group.bio }}</p>
 
-          <h3><span class="text-muted">Albums</span></h3>
+          <h3><span class="text-muted">Discography</span></h3>
             {% for album in group.albums.all %}
               <div>{{ album.name }}, {{ album.release_year }}</div>
-              <div> <img src="{{ MEDIA_URL }}{{ album.cover_photo.name }}" height="100"></div>
+              <p><img src="{{ MEDIA_URL }}{{ album.cover_photo.name }}" height="150"></p>
             {% endfor %}
       </div>
 
       <div class="col-md-5">
         <img src="{{ MEDIA_URL }}{{ group.photo.name }}" height="250">
-        <p class="lead">
-          <dl>
-            <div>Members</div>
-            {% for musician in group.members.all %}
-                <li><a href="{{ musician.get_absolute_url }}">{{ musician }}</a></li>
-            {% endfor %}
-          </dl>
+        <p class="lead"></p>
+        <h3><span class="text-muted">Members</span></h3>
+          {% for musician in group.members.all %}
+            <div><a href="{{ musician.get_absolute_url }}">{{ musician }}</a></div>
+          {% endfor %}
       </div>
     </div>
 
