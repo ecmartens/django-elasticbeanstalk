@@ -25,20 +25,22 @@ SECRET_KEY = '_#(9en-c@dm_#(kz0l9&172de5cyvrq(=rgw37o=$^$mz!0cal'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-demo-dev.us-east-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['localhost', 'django-demo-dev.us-east-1.elasticbeanstalk.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'artist',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'artist',
+    'storages'
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,17 +79,17 @@ WSGI_APPLICATION = 'music.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'musicdb',
-        # 'USER': 'musicuser',
-        # 'PASSWORD': 'musicpass',
-        # 'HOST': '',
-        # 'PORT': '',
-        'NAME': os.environ['RDS_DB_NAME'],
-        'USER': os.environ['RDS_USERNAME'],
-        'PASSWORD': os.environ['RDS_PASSWORD'],
-        'HOST': os.environ['RDS_HOSTNAME'],
-        'PORT': os.environ['RDS_PORT'],
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'musicdb',
+        'USER': 'musicuser',
+        'PASSWORD': 'musicpass',
+        'HOST': '',
+        'PORT': '',
+        # 'NAME': os.environ['RDS_DB_NAME'],
+        # 'USER': os.environ['RDS_USERNAME'],
+        # 'PASSWORD': os.environ['RDS_PASSWORD'],
+        # 'HOST': os.environ['RDS_HOSTNAME'],
+        # 'PORT': os.environ['RDS_PORT'],
     }
 }
 
@@ -128,5 +130,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+USE_S3 = os.getenv('USE_S3') == 'TRUE'
+
+if USE_S3:
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    AWS_DEFAULT_ACL = None
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+    PUBLIC_MEDIA_LOCATION = 'media'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
+    DEFAULT_FILE_STORAGE = 'music.storage_backends.PublicMediaStorage'
+else:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
