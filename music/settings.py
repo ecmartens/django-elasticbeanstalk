@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_#(9en-c@dm_#(kz0l9&172de5cyvrq(=rgw37o=$^$mz!0cal'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '_#(9en-c@dm_#(kz0l9&172de5cyvrq(=rgw37o=$^$mz!0cal')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
-ALLOWED_HOSTS = ['localhost', 'django-demo-dev.us-east-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['localhost', 'django-test1-dev.us-east-1.elasticbeanstalk.com']
 
 
 # Application definition
@@ -80,7 +80,8 @@ WSGI_APPLICATION = 'music.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['RDS_DB_NAME'],
+        'NAME': 'ebdb',
+        # 'NAME': os.environ['RDS_DB_NAME'],
         'USER': os.environ['RDS_USERNAME'],
         'PASSWORD': os.environ['RDS_PASSWORD'],
         'HOST': os.environ['RDS_HOSTNAME'],
