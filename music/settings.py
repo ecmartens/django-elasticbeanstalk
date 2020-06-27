@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '_#(9en-c@dm_#(kz0l9&172de5cyvr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
-ALLOWED_HOSTS = ['localhost', 'django-test1-dev.us-east-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['localhost', 'django-test-1-dev.us-east-1.elasticbeanstalk.com']
 
 
 # Application definition
