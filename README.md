@@ -28,7 +28,7 @@ git clone https://github.com/ecmartens/django-elasticbeanstalk.git
 2. Create a virtual environment for Python 3.7.
 
 ```bash
-pyenv virtualenv 3.7.10 <environment name>
+pyenv virtualenv 3.7.6 <environment name>
 ```
 
 
@@ -36,4 +36,33 @@ pyenv virtualenv 3.7.10 <environment name>
 
 ```bash
 pip install -r requirements.py
+```
+
+
+4. Set default values for your Elastic Beanstalk application.
+
+```bash
+eb init
+```
+
+You'll be asked to select a region, platform, whether to set up SSH and to select a keypair. Elastic Beanstalk will create a .elasticbeanstalk folder with a config.yml file with your configuration options.
+
+
+5. Create your EB environment.
+
+```bash
+eb create --single --database.engine postgres --database.version 12.3 --envvars AWS_STORAGE_BUCKET_NAME=django-artists-media
+```
+
+This creates a single instance environment and provisions your RDS Postgres instance for you. Choose an environment name, DNS name, RDS username and RDS password. Use Postgres version 12.3 to avoid any problems creating tables and copying data to your RDS instance in a later step.
+
+It takes about five minutes to create the environment and your RDS instance.
+
+
+6. Add your environment URL to Django ALLOWED_HOSTS.
+
+Get your envronment URL through the Elastic Beanstalk console (it will be based on your chosen DNS name) and add it to ALLOWED_HOSTS in [settings.py](https://github.com/ecmartens/django-elasticbeanstalk/blob/master/music/settings.py).
+
+```bash
+ALLOWED_HOSTS = ['localhost', 'django-music-dev.us-east-1.elasticbeanstalk.com']
 ```
