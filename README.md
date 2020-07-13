@@ -66,3 +66,56 @@ Get your envronment URL through the Elastic Beanstalk console (it will be based 
 ```bash
 ALLOWED_HOSTS = ['localhost', 'django-music-dev.us-east-1.elasticbeanstalk.com']
 ```
+
+
+7. Set environment variables for DJANGO_DEBUG and DJANGO_SECRET_KEY.
+
+```bash
+eb setenv DJANGO_SECRET_KEY=<secret key>
+eb setenv DJANGO_DEBUG=<True or False>
+```
+
+Note that you don't have to configure environment variables for your RDS instance. Elastic Beanstalk will do this for you.
+
+
+8. Commit changes.
+
+By default, the Elastic Beanstalk CLI [deploys the latest commit in the current branch](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-cli-git.html).
+
+```bash
+git add .
+git commit -m "elastic beanstalk configuration"
+```
+
+
+9. Allow connections to the RDS instance from your IP.
+
+In order to migrate data, you need to allow connections from your IP address. You can do this by adding a rule to the instance security group.
+
+From the RDS console, click on the VPC security group link for your newly created database. That will take you to EC2 where you can edit inbound rules for the security group. Add a rule to allow TCP traffic on port 5432 from your IP.
+
+![Edit Security Group](screenshots/rds_security_group_add_rule.png?raw=true "Add inbound rule to security group")
+
+As a sanity check before moving on, you can do a quick connection check with telnet. Use your RDS endpoint and port 5432.
+
+```bash
+$ telnet asdf.ghjk.us-east-1.rds.amazonaws.com 5432
+Trying 52.3.12.206...
+Connected to ec2-52-3-12-206.compute-1.amazonaws.com.
+Escape character is '^]'.
+```
+
+
+10. Create tables and copy data to the RDS instance.
+
+To start, you'll need to [create a postgres superuser](https://www.postgresql.org/docs/12/app-createuser.html). To make things simple, you can use the same name as your RDS table username.
+
+Create tables and copy data from /postgres/musicdb.sql.
+
+```bash
+$ psql -f /postgres/musicdb.sql --host <rds endpoint> --port 5432 --username <username> --password <password> --dbname <database name>
+```
+
+Try connecting with TablePlus to verify the tables were created and populated with data. You should see the tables shown here.
+
+![Table Plus Screenshot](screenshots/table_plus_screenshot.png?raw=true "Tables")
