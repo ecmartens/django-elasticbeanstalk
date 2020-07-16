@@ -119,3 +119,31 @@ $ psql -f /postgres/musicdb.sql --host <rds endpoint> --port 5432 --username <us
 Try connecting with TablePlus to verify the tables were created and populated with data. You should see the tables shown here.
 
 ![Table Plus Screenshot](screenshots/table_plus_screenshot.png?raw=true "Tables")
+
+
+11. Deploy
+
+```eb deploy```
+
+After this, you should be able to go to your environment URL in your browser and view the site.
+
+
+12. Optional - create super user and use the admin site.
+
+If you want to create a Django super user and visit the admin site, you'll need to log into your instance and run the createsuperuser command.
+
+You can connect to the instance with the SSH command line utility. You'll need the public DNS of your instance (can be found through the EC2 console) and the path to the private key you specified during setup.
+
+```
+SSH -i <path to private key> ec2-user@<public domain of your instance>
+```
+
+Once logged into the instance, you'll need to activate the virtual environment, cd to the root project directory and run the Django createsuperuser command.
+
+```
+source /var/app/venv/staging-LQM1lest/bin/activate
+cd /var/app/current
+python manage.py createsuperuser
+```
+
+Now you can visit the admin site at url/admin.
